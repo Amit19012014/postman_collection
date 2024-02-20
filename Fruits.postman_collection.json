@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "a3a412ad-9b6e-4756-b261-9383b882623e",
+		"name": "Fruits",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23613409",
+		"_collection_link": "https://blue-shuttle-389020.postman.co/workspace/myworkspace1~f945f594-1276-4aa6-b732-0c13cb2c7363/collection/23613409-a3a412ad-9b6e-4756-b261-9383b882623e?action=share&source=collection_link&creator=23613409"
+	},
+	"item": [
+		{
+			"name": "GetRequestToFindAllFruits",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Testing the Status code\r",
+							"pm.test(\"status code is 200\", ()=> {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"// Testing the headers\r",
+							"pm.test(\"Content-Type header is present\",()=>{\r",
+							"pm.response.to.have.header(\"Content-Type\")\r",
+							"});\r",
+							"pm.test(\"Content-Type header is application/json\",()=>{\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset = utf-8');\r",
+							"});\r",
+							"\r",
+							"// Testing the cookies\r",
+							"pm.test(\"cookie 'language' is present\",()=> {\r",
+							"    pm.expect(pm.cookies.has('language')).to.be.true;\r",
+							"});\r",
+							"\r",
+							"// Testing the response time\r",
+							"pm.test(\"response time is less than 200 ms\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"response time is less than 200 ms\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+							"});\r",
+							"\r",
+							"//Asserting a value type\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Test data type of the response\",()=> {\r",
+							"pm.expect(jsonData).to.be.an(\"object\");\r",
+							"pm.expect(jsonData.id).to.be.a(\"number\");\r",
+							"pm.expect(jsonData.FruitName).to.be.a(\"string\");\r",
+							"pm.expect(jsonData.Location).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/Fruits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"Fruits"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

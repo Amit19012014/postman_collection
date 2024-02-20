@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "857d99c7-23af-4d3d-890a-146bf277bb44",
+		"name": "Student",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23613409",
+		"_collection_link": "https://blue-shuttle-389020.postman.co/workspace/myworkspace1~f945f594-1276-4aa6-b732-0c13cb2c7363/collection/23613409-857d99c7-23af-4d3d-890a-146bf277bb44?action=share&source=collection_link&creator=23613409"
+	},
+	"item": [
+		{
+			"name": "Get Single Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\" , () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Status code is 200\" , () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Succesful GET request\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Succesful GET request\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"pm.test(\" 1-Content-Type header is present\", () => {\r",
+							"pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"2-Content-Type header is present\", () => {\r",
+							"pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+							"});\r",
+							"pm.test(\"cookie 'language' is present\", () => {\r",
+							"pm.expect(pm.cookies.has('language')).to.be.true;\r",
+							"});\r",
+							"pm.test(\"cookie language has value 1\", () => {\r",
+							"pm.expect(pm.cookies.get('language')).to.eql('en-gb');\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Test data type of the response\",()=>{\r",
+							"pm.expect(jsonData).to.be.an(\"object\");\r",
+							"pm.expect(jsonData.name).to.be.a(\"String\");\r",
+							"pm.expect(jsonData.id).to.be.a(\"number\");\r",
+							"pm.expect(jsonData.courses).to.be.an(\"array\");\r",
+							"});\r",
+							"pm.test(\"Test array properrties\",() => {\r",
+							"pm.expect(jsonData.courses).to.include(\"selenium\");\r",
+							"pm.expect(jsonData.courses).to.have.members([\"java\" , \"selenium\"]);\r",
+							"});\r",
+							"pm.test(\"value of location field is india\",() => {\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.id).to.be.eql(1)\r",
+							"pm.expect(jsonData.name).to.be.eql(\"Amit\");\r",
+							"pm.expect(jsonData.location).to.be.eql(\"Kasganj\");\r",
+							"pm.expect(jsonData.phone).to.be.eql(\"1234567890\");\r",
+							"pm.expect(jsonData.courses[0]).to.be.eql(\"java\");\r",
+							"pm.expect(jsonData.courses[1]).to.be.eql(\"selenium\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//Json schema Validation\r",
+							"\r",
+							"var schema ={\r",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"id\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    },\r",
+							"    \"name\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"location\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"phone\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"courses\": {\r",
+							"      \"type\": \"array\",\r",
+							"      \"items\": [\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      ]\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"id\",\r",
+							"    \"name\",\r",
+							"    \"location\",\r",
+							"    \"phone\",\r",
+							"    \"courses\"\r",
+							"  ]\r",
+							"}\r",
+							"\r",
+							"pm.test('schema is valid',function(){\r",
+							"pm.expect(tv4.validate(jsonData,schema)).to.be.true;\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/students/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Student",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Yogesh\",\r\n        \"location\": \"Khurja\",\r\n        \"phone\": \"56789345678\",\r\n        \"courses\": [\r\n            \"Science\",\r\n            \"Maths\"\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Student",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Yogesh\",\r\n        \"location\": \"Aligrah\",\r\n        \"phone\": \"1234567890\",\r\n        \"courses\": [\r\n            \"Science\",\r\n            \"Maths\"\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/students/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
